@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{090D65E9-BBA6-4746-AC75-C2A23951B7A9}</ProjectGuid>
+    <ProjectGuid>{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestCustomModule.Core</RootNamespace>
-    <AssemblyName>TestCustomModule.Core</AssemblyName>
+    <RootNamespace>TestCustomModule.ProductRatingCalculator</RootNamespace>
+    <AssemblyName>TestCustomModule.ProductRatingCalculator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -45,17 +45,20 @@
     <Reference Include="VirtoCommerce.Domain, Version=2.25.17.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VirtoCommerce.Domain.2.25.17\lib\net461\VirtoCommerce.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="VirtoCommerce.Platform.Core, Version=2.13.37.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\VirtoCommerce.Platform.Core.2.13.37\lib\net461\VirtoCommerce.Platform.Core.dll</HintPath>
+    <Reference Include="VirtoCommerce.Platform.Core, Version=2.13.26.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtoCommerce.Platform.Core.2.13.26\lib\net461\VirtoCommerce.Platform.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\CustomerReview.cs" />
-    <Compile Include="Model\CustomerReviewSearchCriteria.cs" />
+    <Compile Include="IProductRaitingCalculator.cs" />
+    <Compile Include="ProductRaitingCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ICustomerReviewSearchService.cs" />
-    <Compile Include="Services\ICustomerReviewService.cs" />
-    <Compile Include="Services\IProductRaitingService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestCustomModule.Core\TestCustomModule.Core.csproj">
+      <Project>{090d65e9-bba6-4746-ac75-c2a23951b7a9}</Project>
+      <Name>TestCustomModule.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

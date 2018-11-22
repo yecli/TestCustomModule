@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201810051551355_Initial.Designer.cs">
       <DependentUpon>201810051551355_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811221142220_AddReviewRating.cs" />
+    <Compile Include="Migrations\201811221142220_AddReviewRating.Designer.cs">
+      <DependentUpon>201811221142220_AddReviewRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\CustomerReviewEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +102,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810051551355_Initial.resx">
       <DependentUpon>201810051551355_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221142220_AddReviewRating.resx">
+      <DependentUpon>201811221142220_AddReviewRating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

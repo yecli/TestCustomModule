@@ -6,5 +6,6 @@ namespace TestCustomModule.Core.Model
     {
         public string[] ProductIds { get; set; }
         public bool? IsActive { get; set; }
-    }
+		public bool? HasRating { get; set; }
+	}
 }

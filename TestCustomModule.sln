@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCustomModule.Data", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCustomModule.Test", "TestCustomModule.Test\TestCustomModule.Test.csproj", "{2A11B5E7-3C7E-4F7C-AB46-DE928C29ED7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCustomModule.ProductRatingCalculator", "TestCustomModule.ProductRatingCalculator\TestCustomModule.ProductRatingCalculator.csproj", "{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2A11B5E7-3C7E-4F7C-AB46-DE928C29ED7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A11B5E7-3C7E-4F7C-AB46-DE928C29ED7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A11B5E7-3C7E-4F7C-AB46-DE928C29ED7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6C6335-43A4-4EC2-8FFD-66A0177095BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,8 +20,6 @@ namespace TestCustomModule.Data.Model
         [StringLength(128)]
         public string ProductId { get; set; }
 
-		[Required]
-		[Range(1, 5)]
 		public int Rating { get; set; }
 
 		public virtual CustomerReview ToModel(CustomerReview customerReview)

@@ -43,6 +43,11 @@ namespace TestCustomModule.Data.Services
                     query = query.Where(x => x.IsActive == criteria.IsActive);
                 }
 
+				if (criteria.HasRating.HasValue)
+				{
+					query = query.Where(x => x.Rating > 0);
+				}
+
                 if (!criteria.SearchPhrase.IsNullOrEmpty())
                 {
                     query = query.Where(x => x.Content.Contains(criteria.SearchPhrase));
