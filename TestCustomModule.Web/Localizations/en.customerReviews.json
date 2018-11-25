@@ -1,18 +1,47 @@
 {
-    "customerReviews": {
-        "blades": {
-            "review-list": {
-                "labels": {
-                    "content": "Content",
-                    "modifiedDate": "Last updated",
-                    "no-review": "No Customer Reviews found"
-                }
-            }
-        },
-        "widgets": {
-            "item-detail": {
-                "title": "Customer reviews"
-            }
+  "customerReviews": {
+    "blades": {
+      "review-list": {
+        "labels": {
+          "content": "Content",
+          "modifiedDate": "Last updated",
+          "no-review": "No Customer Reviews found",
+          "title": "Customer reviews",
+          "subtitle": "Ranked reviews customers left for purchased products"
         }
+      },
+      "item-detail": {
+        "labels": {
+          "authorId": "Author Id",
+          "productId": "Product Id",
+          "rating": "Rating",
+          "isActive": "Is Active",
+          "title": "Customer review",
+          "subtitle": "Review details"
+        },
+        "validations": {
+          "authorId": "Author Id is not valid",
+          "productId": "Product Id is not valid",
+          "rating": "Rating is not valid",
+          "isActive": "Is Active is not valid"
+        },
+        "placeholders": {
+          "rating": "Enter rating from 1 to 5…"
+        },
+        "commands": {
+          "save": "Save",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "widgets": {
+      "item-detail": {
+        "title": "Customer reviews"
+      },
+      "rating": {
+        "title": "Product rating",
+        "no-rating":  "No rating"
+      }
     }
+  }
 }

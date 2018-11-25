@@ -18,7 +18,9 @@ angular.module(moduleTemplateName, [])
                             id: 'reviewsList',
                             controller: 'CustomerReviews.Web.reviewsListController',
 							template: 'Modules/$(TestCustomModule.Web)/Scripts/blades/reviews-list.tpl.html',
-                            isClosingDisabled: true
+							isClosingDisabled: true,
+							title: 'customerReviews.blades.review-list.labels.title',
+							subtitle: 'customerReviews.blades.review-list.labels.subtitle',
                         };
                         bladeNavigationService.showBlade(newBlade);
                     }
@@ -45,5 +47,12 @@ angular.module(moduleTemplateName, [])
 			template: 'Modules/$(TestCustomModule.Web)/Scripts/widgets/customerReviewWidget.tpl.html'
         };
         widgetService.registerWidget(itemReviewsWidget, 'itemDetail');
-    }
+
+		var productRatingWidget = {
+			controller: 'CustomerReviews.Web.reviewRatingWidgetController',
+			template: 'Modules/$(TestCustomModule.Web)/Scripts/widgets/reviewRatingWidget.tpl.html'
+		};
+		widgetService.registerWidget(productRatingWidget, 'itemDetail');
+
+	}
 ]);

@@ -8,7 +8,7 @@ namespace TestCustomModule.Data.Repositories
     {
         IQueryable<CustomerReviewEntity> CustomerReviews { get; }
 
-        CustomerReviewEntity[] GetByIds(string[] ids);
+		CustomerReviewEntity[] GetByIds(string[] ids);
         void DeleteCustomerReviews(string[] ids);
-    }
+	}
 }

@@ -1,0 +1,14 @@
+﻿<div class="blade-content __medium-wide">
+	<div class="blade-inner">
+		<div class="inner-block">
+			<form name="detailForm">
+				<div class="form-group">
+					<label class="form-label">{{ 'customerReviews.blades.item-detail.labels.rating' | translate }}</label>
+					<div class="form-input __number">
+						<input smart-float num-type="integer" required ng-model="blade.currentEntity.rating" min="1" max="5" type="text" placeholder="{{ 'customerReviews.blades.item-detail.placeholders.rating' | translate }}" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

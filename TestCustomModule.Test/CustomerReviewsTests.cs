@@ -1,3 +1,4 @@
+using Moq;
 using System;
 using System.Data.Entity;
 using TestCustomModule.Core.Model;
@@ -5,6 +6,7 @@ using TestCustomModule.Core.Services;
 using TestCustomModule.Data.Migrations;
 using TestCustomModule.Data.Repositories;
 using TestCustomModule.Data.Services;
+using VirtoCommerce.Platform.Core.Events;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 using VirtoCommerce.Platform.Testing.Bases;
@@ -96,10 +98,17 @@ namespace TestCustomModule.Test
         {
             get
             {
-                return new CustomerReviewService(GetRepository);
+                return new CustomerReviewService(GetRepository, GetEventPublisher);
             }
         }
 
+		public IEventPublisher GetEventPublisher
+		{
+			get
+			{
+				return new Mock<IEventPublisher>().Object;
+			}
+		}
 
         protected ICustomerReviewRepository GetRepository()
         {

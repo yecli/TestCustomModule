@@ -21,31 +21,27 @@ angular.module('CustomerReviews.Web')
             }
 
             blade.selectNode = function (data) {
-                //$scope.selectedNodeId = data.id;
+				openReviewDetails(data);
+			}
 
-                //var newBlade = {
-                //    id: 'reviewDetails',
-                //    currentEntityId: data.id,
-                //    currentEntity: data,
-                //    title: data.name,
-                //    controller: 'virtoCommerce.storeModule.storeDetailController',
-                //    template: 'Modules/$(VirtoCommerce.Store)/Scripts/blades/store-detail.tpl.html'
-                //};
-                //bladeNavigationService.showBlade(newBlade, blade);
-            }
+			function openReviewDetails(nodeData) {
+				$scope.selectedNodeId = nodeData ? nodeData.id : null;
+
+				var newBlade = {
+					id: 'reviewDetails',
+					currentEntityId: $scope.selectedNodeId,
+					currentEntity: nodeData || {},
+					isNew: nodeData == null,
+					title: 'customerReviews.widgets.item-detail.title',
+					subtitle: 'customerReviews.widgets.item-detail.subtitle',
+					controller: 'CustomerReviews.Web.reviewsDetailController',
+					template: 'Modules/$(TestCustomModule.Web)/Scripts/blades/review-detail.tpl.html'
+				};
+				bladeNavigationService.showBlade(newBlade, blade);
+			}
 
             function openBladeNew() {
-                $scope.selectedNodeId = null;
-
-                var newBlade = {
-                    id: 'storeDetails',
-                    currentEntity: {},
-                    title: 'stores.blades.new-store-wizard.title',
-                    subtitle: 'stores.blades.new-store-wizard.subtitle',
-                    controller: 'virtoCommerce.storeModule.newStoreWizardController',
-                    template: 'Modules/$(VirtoCommerce.Store)/Scripts/wizards/newStore/new-store-wizard.tpl.html'
-                };
-                bladeNavigationService.showBlade(newBlade, blade);
+				openReviewDetails(null);
             }
 
             blade.headIcon = 'fa-comments';
@@ -56,17 +52,18 @@ angular.module('CustomerReviews.Web')
                     executeMethod: blade.refresh,
                     canExecuteMethod: function () {
                         return true;
-                    }
+                    },
+					permission: 'customerReview:update'
                 },
-                //{
-                //    name: "platform.commands.add", icon: 'fa fa-plus',
-                //    executeMethod: openBladeNew,
-                //    canExecuteMethod: function () {
-                //        return true;
-                //    },
-                //    permission: 'store:create'
-                //}
-            ];
+     //           {
+     //               name: "platform.commands.add", icon: 'fa fa-plus',
+     //               executeMethod: openBladeNew,
+     //               canExecuteMethod: function () {
+     //                   return true;
+     //               },
+					//permission: 'customerReview:update'
+     //           }
+			];
 
             // simple and advanced filtering
             var filter = $scope.filter = blade.filter || {};

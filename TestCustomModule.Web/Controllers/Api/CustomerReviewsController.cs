@@ -14,16 +14,19 @@ namespace TestCustomModule.Web.Controllers.Api
     {
         private readonly ICustomerReviewSearchService _customerReviewSearchService;
         private readonly ICustomerReviewService _customerReviewService;
+		private readonly IProductRatingService _productRatingService;
 
         public CustomerReviewsController()
         {
         }
 
-        public CustomerReviewsController(ICustomerReviewSearchService customerReviewSearchService, ICustomerReviewService customerReviewService)
+        public CustomerReviewsController(ICustomerReviewSearchService customerReviewSearchService, ICustomerReviewService customerReviewService, IProductRatingService productRatingService)
         {
             _customerReviewSearchService = customerReviewSearchService;
             _customerReviewService = customerReviewService;
-        }
+			_productRatingService = productRatingService;
+
+		}
 
         /// <summary>
         /// Return product Customer review search results
@@ -38,27 +41,27 @@ namespace TestCustomModule.Web.Controllers.Api
             return Ok(result);
         }
 
-        /// <summary>
-        ///  Create new or update existing customer review
-        /// </summary>
-        /// <param name="customerReviews">Customer reviews</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("")]
-        [ResponseType(typeof(void))]
-        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Update(CustomerReview[] customerReviews)
-        {
-            _customerReviewService.SaveCustomerReviews(customerReviews);
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+		/// <summary>
+		///  Create new or update existing customer review
+		/// </summary>
+		/// <param name="customerReviews">Customer reviews</param>
+		/// <returns></returns>
+		[HttpPut]
+		[Route("")]
+		[ResponseType(typeof(void))]
+		[CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
+		public IHttpActionResult Update(CustomerReview[] customerReviews)
+		{
+			_customerReviewService.SaveCustomerReviews(customerReviews);
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-        /// <summary>
-        /// Delete Customer Reviews by IDs
-        /// </summary>
-        /// <param name="ids">IDs</param>
-        /// <returns></returns>
-        [HttpDelete]
+		/// <summary>
+		/// Delete Customer Reviews by IDs
+		/// </summary>
+		/// <param name="ids">IDs</param>
+		/// <returns></returns>
+		[HttpDelete]
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
@@ -67,5 +70,21 @@ namespace TestCustomModule.Web.Controllers.Api
             _customerReviewService.DeleteCustomerReviews(ids);
             return StatusCode(HttpStatusCode.NoContent);
         }
-    }
+
+		/// <summary>
+		/// Return product aggregated rating based on all reviews
+		/// </summary>
+		[HttpGet]
+		[Route("productRating")]
+		[ResponseType(typeof(ProductRatingResult))]
+		[CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
+		public IHttpActionResult GetProductRating(string productId)
+		{
+			var ratings = _productRatingService.GetProductRatings(new string[] { productId });
+			var result = new ProductRatingResult() {
+				RatingValue = ratings != null && ratings.Length > 0 ? (decimal?)ratings[0].Rating : null
+			};
+			return Ok(result);
+		}
+	}
 }

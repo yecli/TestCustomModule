@@ -1,0 +1,8 @@
+<div class="gridster-cnt">
+	<div class="cnt-inner">
+		<div class="list-count" ng-if="loading">...</div>
+		<div class="list-count" ng-if="!loading && !noRatings">{{ ratingValue }}</div>
+		<div class="list-t" ng-if="!loading && !noRatings">{{ 'customerReviews.widgets.rating.title' | translate }}</div>
+		<div class="list-t" ng-if="!loading && noRatings">{{ 'customerReviews.widgets.rating.no-rating' | translate }}</div>
+	</div>
+</div>
