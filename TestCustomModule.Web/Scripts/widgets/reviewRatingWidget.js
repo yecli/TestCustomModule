@@ -8,9 +8,6 @@ angular.module('CustomerReviews.Web')
 				$scope.loading = false;
 				$scope.ratingValue = data.ratingValue;
 				$scope.noRatings = typeof $scope.ratingValue === 'undefined';
-			}, function (error) {
-				bladeNavigationService.setError('Error ' + error.status, blade);
-				blade.isLoading = false;
 			});
 		}
 

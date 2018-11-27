@@ -4,7 +4,6 @@ using TestCustomModule.Core.Model;
 using TestCustomModule.Core.Services;
 using TestCustomModule.Data.Model;
 using TestCustomModule.Data.Repositories;
-using TestCustomModule.ProductRatingCalculator;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Data.Infrastructure;
 
@@ -13,9 +12,9 @@ namespace TestCustomModule.Data.Services
 	public class ProductRatingService : ServiceBase, IProductRatingService
 	{
 		private readonly Func<IProductRatingRepository> _repositoryFactory;
-		private readonly IProductRaitingCalculator _calculator;
+		private readonly IProductRatingCalculator _calculator;
 
-		public ProductRatingService(Func<IProductRatingRepository> repositoryFactory, IProductRaitingCalculator calculator)
+		public ProductRatingService(Func<IProductRatingRepository> repositoryFactory, IProductRatingCalculator calculator)
 		{
 			_repositoryFactory = repositoryFactory;
 			_calculator = calculator;

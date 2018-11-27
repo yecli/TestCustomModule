@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestCustomModule.Core.Model;
 using TestCustomModule.Core.Services;
-using TestCustomModule.ProductRatingCalculator;
+using TestCustomModule.Data.Services;
 using Xunit;
 
 namespace TestCustomModule.Test
@@ -31,7 +31,7 @@ namespace TestCustomModule.Test
 				new CustomerReview() { ProductId = Product2Id},
 				new CustomerReview() { ProductId = Product3Id},
 			};
-			IProductRaitingCalculator calculator = GetCalculator(allReviews);
+			var calculator = GetCalculator(allReviews);
 			Assert.Equal(0m, calculator.GetProductRating(Product1Id));
 			Assert.Equal(0m, calculator.GetProductRating(Product2Id));
 			Assert.Equal(0m, calculator.GetProductRating(Product3Id));
@@ -45,7 +45,7 @@ namespace TestCustomModule.Test
 				new CustomerReview() { ProductId = Product2Id, Rating = 1},
 				new CustomerReview() { ProductId = Product1Id, Rating = 1},
 			};
-			IProductRaitingCalculator calculator = GetCalculator(allReviews.Take(2).ToList());
+			var calculator = GetCalculator(allReviews.Take(2).ToList());
 			Assert.Equal(0m, calculator.GetProductRating(Product1Id));
 			Assert.Equal(0m, calculator.GetProductRating(Product2Id));
 			Assert.Equal(0m, calculator.GetProductRating(Product3Id));
@@ -60,7 +60,7 @@ namespace TestCustomModule.Test
 		public void BadArguments()
 		{
 			var allReviews = new List<CustomerReview>() { };
-			IProductRaitingCalculator calculator = GetCalculator(allReviews);
+			var calculator = GetCalculator(allReviews);
 			Assert.Throws<ArgumentNullException>(() => calculator.GetProductRating(null));
 			Assert.Equal(0m, calculator.GetProductRating(NonExistentProductId));
 		}
@@ -99,38 +99,72 @@ namespace TestCustomModule.Test
 				new CustomerReview() { ProductId = Product3Id, Rating = 5},
 				new CustomerReview() { ProductId = Product3Id, Rating = 5},
 			};
-			IProductRaitingCalculator calculator = GetCalculator(allReviews);
+			var calculator = GetCalculator(allReviews);
 			Assert.Equal(3m, calculator.GetProductRating(Product1Id));
 			Assert.Equal(2.25m, calculator.GetProductRating(Product2Id));
 			Assert.Equal(3.6m, calculator.GetProductRating(Product3Id));
 		}
 
-		private IProductRaitingCalculator GetCalculator(ICollection<CustomerReview> reviews)
+		[Fact]
+		public void HugeReviewCountTest()
 		{
-			var searchServiceMock = CreateSearchServiceMock(reviews);
-			var calculator = CreateCalculator(searchServiceMock.Object);
+			var allReviews = new List<CustomerReview>()
+			{
+				new CustomerReview() { ProductId = Product2Id, Rating = 2},
+				new CustomerReview() { ProductId = Product2Id, Rating = 2},
+			};
+			for (int i = 0; i < 150; i++)
+			{
+				allReviews.Add(new CustomerReview() { ProductId = Product1Id, Rating = i % 5 + 1 });
+			}
+			var calculator = GetCalculator(allReviews);
+			Assert.Equal(Math.Round((150m * 3 + 454m / 152 * 2) / (150 + 2), 10, MidpointRounding.AwayFromZero), Math.Round(calculator.GetProductRating(Product1Id), 10, MidpointRounding.AwayFromZero));
+			Assert.Equal(Math.Round((2m * 2 + 454m / 152 * 2) / (2 + 2), 10, MidpointRounding.AwayFromZero), Math.Round(calculator.GetProductRating(Product2Id), 10, MidpointRounding.AwayFromZero));
+		}
+
+
+		private IProductRatingCalculator GetCalculator(ICollection<CustomerReview> reviews)
+		{
+			var searchServiceMock = CreateSearchService(reviews);
+			var calculator = CreateCalculator(searchServiceMock);
 			return calculator;
 		}
 
-		private static Mock<ICustomerReviewSearchService> CreateSearchServiceMock(ICollection<CustomerReview> allReviews)
+		private static ICustomerReviewSearchService CreateSearchService(ICollection<CustomerReview> allReviews)
+		{
+			return CreateCustomerServiceMock(allReviews);
+		}
+
+		private static ICustomerReviewSearchService CreateCustomerServiceMock(ICollection<CustomerReview> allReviews)
 		{
 			var searchServiceMock = new Mock<ICustomerReviewSearchService>();
 			searchServiceMock.Setup(x => x.SearchCustomerReviews(It.IsAny<CustomerReviewSearchCriteria>()))
 				.Returns((CustomerReviewSearchCriteria criteria) =>
 				{
-					var results = criteria != null && criteria.ProductIds != null ? allReviews.Where(x => x.Rating > 0 && criteria.ProductIds.Contains(x.ProductId)).ToList() : allReviews;
+					var query = allReviews.AsQueryable();
+					if (criteria.ProductIds != null)
+					{
+						query = query.Where(x => criteria.ProductIds.Contains(x.ProductId));
+					}
+					if (criteria.HasRating.HasValue && criteria.HasRating.Value)
+					{
+						query = query.Where(x => x.Rating > 0);
+					}
+					var results = query.Skip(criteria.Skip)
+									 .Take(criteria.Take)
+									 .ToList();
 					return new VirtoCommerce.Domain.Commerce.Model.Search.GenericSearchResult<CustomerReview>()
 					{
 						Results = results,
 						TotalCount = results.Count,
 					};
 				});
-			return searchServiceMock;
+			return searchServiceMock.Object;
 		}
 
-		private IProductRaitingCalculator CreateCalculator(ICustomerReviewSearchService searchService)
+		private IProductRatingCalculator CreateCalculator(ICustomerReviewSearchService searchService)
 		{
-			return new ProductRaitingCalculator(searchService);
+			return new ProductRatingCalculator(searchService);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace TestCustomModule.Core.Model
+﻿namespace TestCustomModule.Web.Model
 {
 	public class ProductRatingResult
 	{

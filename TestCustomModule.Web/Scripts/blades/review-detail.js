@@ -1,5 +1,5 @@
 ﻿angular.module('CustomerReviews.Web')
-	.controller('CustomerReviews.Web.reviewsDetailController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeNavigationService', function ($scope, reviewsApi, bladeNavigationService) {
+	.controller('CustomerReviews.Web.reviewDetailController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeNavigationService', function ($scope, reviewsApi, bladeNavigationService) {
 		var blade = $scope.blade;
 		blade.updatePermission = 'customerReview:update';
 
@@ -51,9 +51,6 @@
 				}
 				blade.isLoading = false;
 				bladeNavigationService.closeBlade(blade);
-			}, function (error) {
-				bladeNavigationService.setError('Error ' + error.status, blade);
-				blade.isLoading = false;
 			});
 		};
 

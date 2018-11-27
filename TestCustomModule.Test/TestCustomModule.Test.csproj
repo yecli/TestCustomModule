@@ -132,10 +132,6 @@
       <Project>{7653d2ae-4324-4f24-bc11-6d06f6557a14}</Project>
       <Name>TestCustomModule.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestCustomModule.ProductRatingCalculator\TestCustomModule.ProductRatingCalculator.csproj">
-      <Project>{ca6c6335-43a4-4ec2-8ffd-66a0177095ba}</Project>
-      <Name>TestCustomModule.ProductRatingCalculator</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />

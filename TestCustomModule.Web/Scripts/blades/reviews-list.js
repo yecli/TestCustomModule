@@ -34,7 +34,7 @@ angular.module('CustomerReviews.Web')
 					isNew: nodeData == null,
 					title: 'customerReviews.widgets.item-detail.title',
 					subtitle: 'customerReviews.widgets.item-detail.subtitle',
-					controller: 'CustomerReviews.Web.reviewsDetailController',
+					controller: 'CustomerReviews.Web.reviewDetailController',
 					template: 'Modules/$(TestCustomModule.Web)/Scripts/blades/review-detail.tpl.html'
 				};
 				bladeNavigationService.showBlade(newBlade, blade);

@@ -3,7 +3,6 @@ using TestCustomModule.Core.Events;
 using TestCustomModule.Core.Services;
 using TestCustomModule.Data.Repositories;
 using TestCustomModule.Data.Services;
-using TestCustomModule.ProductRatingCalculator;
 using TestCustomModule.Web.Handlers;
 using VirtoCommerce.Platform.Core.Bus;
 using VirtoCommerce.Platform.Core.Common;
@@ -48,26 +47,10 @@ namespace TestCustomModule.Web
 
 			_container.RegisterType<IProductRatingRepository>(injectionFactory);
 			_container.RegisterType<IProductRatingService, ProductRatingService>();
-			_container.RegisterType<IProductRaitingCalculator, ProductRaitingCalculator>();
+			_container.RegisterType<IProductRatingCalculator, ProductRatingCalculator>();
 
 			var eventHandlerRegistrar = _container.Resolve<IHandlerRegistrar>();
 			eventHandlerRegistrar.RegisterHandler<CustomerReviewChangedEvent>(async (message, token) => await _container.Resolve<CustomerReviewChangedEventHandler>().Handle(message));
-
-			// Try to avoid calling _container.Resolve<>();
-		}
-
-		public override void PostInitialize()
-		{
-			base.PostInitialize();
-
-			// This method is called for each installed module on the second stage of initialization.
-
-			// Register implementations 
-			// _container.RegisterType<IMyService, MyService>();
-
-			// Resolve registered implementations:
-			var settingManager = _container.Resolve<ISettingsManager>();
-			var value = settingManager.GetValue("Pricing.ExportImport.Description", string.Empty);
 		}
 	}
 }
